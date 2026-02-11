@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Short Film - AI Short Film Generator
+
+Create stunning AI-generated short films from simple premises. Built with Next.js 14, Clerk, and Supabase.
+
+## Features
+
+- 🎬 AI-powered short film generation
+- 🔐 Secure authentication with Clerk (Google + Email)
+- 🔑 Encrypted API key storage (OpenAI & Gemini)
+- 🎨 Multiple visual styles (cinematic, noir, anime, documentary, sci-fi, fantasy, horror, comedy)
+- 🎵 Music integration with customizable vibes
+- 📊 Real-time generation progress tracking
+- 📜 Generation history
+- 🌙 Beautiful dark mode UI with Tailwind + shadcn/ui
+
+## Tech Stack
+
+- **Framework**: Next.js 14 (App Router)
+- **Auth**: Clerk
+- **Database**: Supabase
+- **Styling**: Tailwind CSS + shadcn/ui
+- **Deployment**: Vercel
+
+## Reusable Auth Pattern
+
+This project implements a reusable Clerk + Supabase pattern in `/lib`:
+
+- `lib/auth.ts` - Clerk authentication helpers
+- `lib/db.ts` - Supabase client with user context
+- `lib/api-keys.ts` - AES-256-GCM encrypted credential storage
+
+Copy these files to new projects for consistent auth handling.
+
+## Environment Variables
+
+```bash
+# Clerk Auth
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_xxx
+CLERK_SECRET_KEY=sk_test_xxx
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/generate
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/generate
+
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=xxx
+
+# API Key Encryption (32-byte secret)
+API_KEY_ENCRYPTION_SECRET=your-32-byte-encryption-key-here
+```
+
+## Database Setup
+
+Run the SQL in `supabase/schema.sql` to set up the required tables:
+
+1. `user_api_keys` - Encrypted user API keys
+2. `generations` - Film generation records
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env.local
+# Edit .env.local with your keys
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Deploy to Vercel:
 
-## Learn More
+```bash
+# Deploy with Vercel CLI
+vc
 
-To learn more about Next.js, take a look at the following resources:
+# Or connect your GitHub repo to Vercel
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Make sure to add all environment variables in the Vercel dashboard.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## API Key Security
 
-## Deploy on Vercel
+User API keys are encrypted using AES-256-GCM before storage. The encryption key is derived from `API_KEY_ENCRYPTION_SECRET` (hashed to 32 bytes). Keys are never stored in plaintext and are only decrypted server-side when needed.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Future Integration
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This web app currently has placeholder video generation. The real generation logic will be integrated with the [short-film CLI tool](https://github.com/Olafs-World/short-film) Python backend.
+
+## Part of Olafs World
+
+This is a project in the Olafs World ecosystem. The auth pattern is designed to be shared across future projects.
+
+## License
+
+MIT
