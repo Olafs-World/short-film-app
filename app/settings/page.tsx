@@ -4,6 +4,8 @@ import { getApiKeys } from '@/lib/api-keys';
 import { ApiKeyForm } from '@/components/api-key-form';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
+export const dynamic = 'force-dynamic';
+
 export default async function SettingsPage() {
   const userId = await requireAuth();
   const apiKeys = await getApiKeys(userId);

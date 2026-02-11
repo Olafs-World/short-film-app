@@ -3,6 +3,8 @@ import { getGeneration } from '@/app/actions/generate';
 import { GenerationView } from '@/components/generation-view';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
+export const dynamic = 'force-dynamic';
+
 export default async function GenerationPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const generation = await getGeneration(id);
