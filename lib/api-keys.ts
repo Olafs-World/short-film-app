@@ -91,11 +91,11 @@ export async function storeApiKeys(
   };
   
   if (keys.openaiKey !== undefined) {
-    encryptedData.openai_key = keys.openaiKey ? encryptApiKey(keys.openaiKey) : null;
+    encryptedData.openai_key = keys.openaiKey ? encryptApiKey(keys.openaiKey) : undefined;
   }
   
   if (keys.geminiKey !== undefined) {
-    encryptedData.gemini_key = keys.geminiKey ? encryptApiKey(keys.geminiKey) : null;
+    encryptedData.gemini_key = keys.geminiKey ? encryptApiKey(keys.geminiKey) : undefined;
   }
   
   // Upsert: update if exists, insert if not
